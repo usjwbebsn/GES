@@ -1,0 +1,114 @@
+/* ═══════════════════════════════
+   EY — animations.css
+   Keyframes and transitions
+   ═══════════════════════════════ */
+
+/* ── Earthquake ripple ──────────────────────────────── */
+@keyframes eq-ripple {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ── Missile pulse ──────────────────────────────────── */
+@keyframes pulse-red {
+  0%   { transform: scale(0.9); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes missile-glow {
+  from { box-shadow: 0 0 10px rgba(255,23,68,0.3), inset 0 0 8px rgba(255,23,68,0.1); }
+  to   { box-shadow: 0 0 25px rgba(255,23,68,0.6), inset 0 0 15px rgba(255,23,68,0.2); }
+}
+
+/* ── Drone pulse ──────────────────────────────────────── */
+@keyframes pulse-orange {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* ── Tsunami wave ─────────────────────────────────────── */
+@keyframes tsunami-wave {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* ── Nuclear rotation ─────────────────────────────────── */
+@keyframes nuclear-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Generic pulse ────────────────────────────────────── */
+@keyframes generic-pulse {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* ── User location pulse ──────────────────────────────── */
+@keyframes user-pulse {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ── Status dot pulse ─────────────────────────────────── */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--green); }
+  50%       { opacity: 0.5; box-shadow: 0 0 2px var(--green); }
+}
+
+/* ── Blink ────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+/* ── Target blink ─────────────────────────────────────── */
+@keyframes target-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(255,23,68,0.5); }
+  50%       { opacity: 0.5; box-shadow: 0 0 4px rgba(255,23,68,0.2); }
+}
+
+/* ── Trajectory dash animation ────────────────────────── */
+@keyframes trajectory-dash {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ── Scan line ────────────────────────────────────────── */
+@keyframes scanline {
+  0%   { top: -60px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(100% + 60px); opacity: 0; }
+}
+
+/* ── Feed item slide in ───────────────────────────────── */
+@keyframes feed-slide-in {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── Glitch effects ───────────────────────────────────── */
+@keyframes glitch-1 {
+  0%   { transform: translate(0); opacity: 0.9; }
+  20%  { transform: translate(-3px, 1px); opacity: 0.9; }
+  40%  { transform: translate(3px, -1px); opacity: 0.9; }
+  60%  { transform: translate(-2px, 2px); opacity: 0.9; }
+  80%  { transform: translate(2px, -2px); opacity: 0.9; }
+  100% { transform: translate(0); opacity: 0; }
+}
+
+@keyframes glitch-2 {
+  0%   { transform: translate(0); opacity: 0.9; }
+  20%  { transform: translate(3px, -1px); opacity: 0.9; }
+  40%  { transform: translate(-3px, 1px); opacity: 0.9; }
+  60%  { transform: translate(2px, -2px); opacity: 0.9; }
+  80%  { transform: translate(-2px, 2px); opacity: 0.9; }
+  100% { transform: translate(0); opacity: 0; }
+}

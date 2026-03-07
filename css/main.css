@@ -1,0 +1,274 @@
+/* ═══════════════════════════════
+   EY — main.css
+   Variables, reset, layout, grid
+   ═══════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap');
+
+/* ── Variables ──────────────────────────────────────── */
+:root {
+  --bg:      #000408;
+  --panel:   #030D14;
+  --border:  #0A2535;
+  --cyan:    #00E5FF;
+  --red:     #FF1744;
+  --orange:  #FF6D00;
+  --yellow:  #FFD600;
+  --green:   #00E676;
+  --text:    #B0BEC5;
+  --grid:    rgba(0,229,255,0.04);
+
+  --font-hud:  'Orbitron', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-ui:   'Inter', sans-serif;
+
+  --header-h: 56px;
+  --sidebar-l: 310px;
+  --sidebar-r: 290px;
+  --border-radius: 4px;
+}
+
+/* ── Reset ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Grid background ──────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.06) 2px,
+    rgba(0,0,0,0.06) 4px
+  );
+}
+
+/* Fade in on load */
+body {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+body.loaded {
+  opacity: 1;
+}
+
+/* ── App layout ───────────────────────────────────────── */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  background: rgba(3,13,20,0.95);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  flex-shrink: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo-small {
+  font-family: var(--font-hud);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--cyan);
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(0,229,255,0.6);
+}
+
+.header-version {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(0,229,255,0.4);
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+#utc-clock {
+  font-family: var(--font-hud);
+  font-size: 18px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(0,229,255,0.5);
+}
+
+#utc-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(0,229,255,0.5);
+  letter-spacing: 1px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Search input */
+#location-search {
+  background: rgba(0,229,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  width: 180px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#location-search:focus {
+  border-color: rgba(0,229,255,0.4);
+  box-shadow: 0 0 10px rgba(0,229,255,0.1);
+}
+#location-search::placeholder {
+  color: rgba(176,190,197,0.3);
+}
+
+/* API status dots */
+.api-indicators {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.api-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.api-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(176,190,197,0.3);
+  transition: background 0.3s;
+}
+.api-dot.online { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.api-dot.offline { background: var(--red); animation: blink 1s infinite; }
+.api-dot.signal-lost { background: var(--red); animation: blink 0.4s infinite; }
+
+.api-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(176,190,197,0.6);
+  letter-spacing: 0.5px;
+}
+
+/* ── Main content area ────────────────────────────────── */
+#content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Utility ──────────────────────────────────────────── */
+.section-title {
+  font-family: var(--font-hud);
+  font-size: 10px;
+  color: rgba(0,229,255,0.6);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.section-title::before {
+  content: '// ';
+  color: rgba(0,229,255,0.3);
+}
+
+/* Scan line on panels */
+.panel-scan::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.08), transparent);
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+}
+
+/* ── Scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0,229,255,0.3);
+  border-radius: 2px;
+  box-shadow: 0 0 4px rgba(0,229,255,0.3);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(0,229,255,0.6); }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-l: 270px;
+    --sidebar-r: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  #header { padding: 0 10px; }
+  #location-search, #utc-date, .header-version { display: none; }
+  #utc-clock { font-size: 14px; }
+  .api-indicators { gap: 6px; }
+  .api-label { display: none; }
+}
