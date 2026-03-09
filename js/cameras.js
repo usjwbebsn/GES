@@ -32,8 +32,8 @@ const CAMERAS = [
     country: "Japon",
     region: "Asia",
     category: "Ciudad",
-    url: "https://www.youtube.com/embed/ydYDqZQpim8?autoplay=1&mute=1&controls=1&rel=0",
-    thumb: "https://img.youtube.com/vi/ydYDqZQpim8/maxresdefault.jpg",
+    url: "https://www.youtube.com/watch?v=dfVK7ld38Ys",
+    thumb: "https://img.youtube.com/vi/dfVK7ld38Ys/maxresdefault.jpg",
     live: true,
     featured: true,
     active: true
