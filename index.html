@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Camaras en vivo de todo el mundo. Naturaleza, ciudades y oceanos en tiempo real.">
+  <title>YEY cam</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAV
+  ════════════════════════════════════════════════════════ -->
+  <nav id="nav">
+
+    <div class="nav-logo" onclick="scrollTo(0,0)">YEY<em>cam</em></div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="setTab(this,'all')">Inicio</button>
+      <button class="nav-tab" onclick="setTab(this,'Ciudad')">Ciudades</button>
+      <button class="nav-tab" onclick="setTab(this,'Naturaleza')">Naturaleza</button>
+      <button class="nav-tab" onclick="setTab(this,'Mar')">Mar</button>
+    </div>
+
+    <div class="nav-right">
+      <div class="search-wrap">
+        <input
+          class="search-inline"
+          id="search-inline"
+          type="text"
+          placeholder="Buscar..."
+          oninput="onSearchInput(event)">
+        <button class="search-toggle" onclick="toggleSearchBar()" aria-label="Buscar">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════ -->
+  <section class="hero">
+
+    <div class="hero-media">
+      <iframe id="hero-frame" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <div class="hero-veil"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="live-pulse"></span>
+        <span id="hero-eyebrow-txt">En vivo</span>
+      </div>
+      <h1 class="hero-title" id="hero-title">—</h1>
+      <p class="hero-desc" id="hero-desc">—</p>
+      <div class="hero-actions">
+        <button class="btn-watch" id="btn-watch">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M5 3l14 9-14 9V3z"/>
+          </svg>
+          Ver ahora
+        </button>
+        <button class="btn-more" id="btn-more">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          Mas info
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-dots" id="hero-dots"></div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ════════════════════════════════════════════════════════ -->
+  <main class="content">
+
+    <!-- Filtro por region -->
+    <div class="pills" id="pills">
+      <button class="pill on"  onclick="setPill(this,'all')">Todo</button>
+      <button class="pill"     onclick="setPill(this,'Asia')">Asia</button>
+      <button class="pill"     onclick="setPill(this,'Europa')">Europa</button>
+      <button class="pill"     onclick="setPill(this,'America')">America</button>
+      <button class="pill"     onclick="setPill(this,'Africa')">Africa</button>
+      <button class="pill"     onclick="setPill(this,'Oceania')">Oceania</button>
+    </div>
+
+    <!-- Los shelves se generan dinamicamente desde main.js -->
+    <div id="shelves"></div>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SEARCH OVERLAY
+  ════════════════════════════════════════════════════════ -->
+  <div class="search-overlay" id="search-overlay">
+
+    <button class="search-close-btn" onclick="closeSearchOverlay()" aria-label="Cerrar busqueda">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <input
+      class="search-overlay-field"
+      id="search-overlay-field"
+      type="text"
+      placeholder="Buscar camara, pais, ciudad..."
+      oninput="onOverlaySearchInput(event)">
+
+    <div class="search-results-grid" id="search-results-grid"></div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       THEATRE MODAL (reproductor)
+  ════════════════════════════════════════════════════════ -->
+  <div class="theatre-backdrop" id="theatre-backdrop" onclick="if(event.target===this)closeTheatre()">
+
+    <div class="theatre-modal" id="theatre-modal">
+
+      <div class="theatre-player" id="theatre-player"></div>
+
+      <div class="theatre-bar">
+        <div>
+          <div class="theatre-name"    id="theatre-name"></div>
+          <div class="theatre-meta">
+            <span id="theatre-country"></span>
+            <span id="theatre-category"></span>
+          </div>
+        </div>
+        <div class="theatre-actions">
+          <button class="icon-btn" onclick="theatreFullscreen()" title="Pantalla completa">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+          </button>
+          <button class="icon-btn" onclick="closeTheatre()" title="Cerrar">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPTS
+       Orden importante: cameras.js primero, luego main.js
+  ════════════════════════════════════════════════════════ -->
+  <script src="js/cameras.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
